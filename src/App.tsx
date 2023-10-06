@@ -245,7 +245,7 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get<Job[]>('https://localhost:7295/api/Job');
+        const res = await axios.get<Job[]>('https://localhost:5001/api/Job');
         setJobs(res.data);
       } catch (error) {
         console.error("Erro ao buscar dados da API", error);
@@ -267,12 +267,12 @@ function App() {
       try {
 
         // Faça a solicitação POST para a API com os dados do formData
-        const response = await axios.post('https://localhost:7295/api/Job', formData);
+        const response = await axios.post('https://localhost:5001/api/Job', formData);
 
         const jobId = response.data;
 
 
-        const res = await axios.get<Job[]>('https://localhost:7295/api/Job');
+        const res = await axios.get<Job[]>('https://localhost:5001/api/Job');
 
 
         setJobs(res.data);
@@ -313,7 +313,7 @@ function App() {
 
 
 
-        const response = await axios.put(`https://localhost:7295/api/Job/${taskId}`, {
+        const response = await axios.put(`https://localhost:5001/api/Job/${taskId}`, {
           id: taskId,
           name: updateName,
           description: updateDescription,
@@ -323,7 +323,7 @@ function App() {
 
 
         // Atualize a lista de tarefas após a atualização
-        const res = await axios.get<Job[]>('https://localhost:7295/api/Job');
+        const res = await axios.get<Job[]>('https://localhost:5001/api/Job');
         setJobs(res.data);
 
       } catch (error) {
@@ -338,7 +338,7 @@ function App() {
     if (taskToDelete !== null) {
       try {
 
-        await axios.delete(`https://localhost:7295/api/Job/${taskToDelete}`);
+        await axios.delete(`https://localhost:5001/api/Job/${taskToDelete}`);
 
 
         const updatedJobs = jobs.filter((job) => job.id !== taskToDelete);
@@ -363,7 +363,7 @@ function App() {
     else {
       try {
 
-        const response = await axios.put(`https://localhost:7295/api/Email/${1}`, {
+        const response = await axios.put(`https://localhost:5001/api/Email/${1}`, {
           id: 1,
           emailSend: updateEmail,
 
@@ -380,7 +380,7 @@ function App() {
 
   const handleSendEmail= async () => {
 
-    const response = await axios.get(`https://localhost:7295/api/Job/${taskId}`)
+    const response = await axios.get(`https://localhost:5001/api/Job/${taskId}`)
 
     const res = response.data;
 
@@ -389,7 +389,7 @@ function App() {
     const formattedDate = format(executionDate, 'dd/MM/yyyy HH:mm:ss');
 
     //const response = await axios.get(`https://localhost:7295/api/SendEmail?jobId=${jobId}&timeSendEmail=${timeSendEmail}`);
-    const sendEmail = await axios.post(`https://localhost:7295/api/SendEmail?jobId=${res.id}&timeSendEmail=${delayMinutes}`,
+    const sendEmail = await axios.post(`https://localhost:5001/api/SendEmail?jobId=${res.id}&timeSendEmail=${delayMinutes}`,
     {
       subject: "Tarefa a ser executada",
       body: `Olá, esta é uma notificação para informar que uma tarefa deverá executada em breve.\n\n
