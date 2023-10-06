@@ -1,0 +1,225 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  min-width: 200px; 
+  
+}
+.job-container{
+
+  border-radius: 10px;
+  background-color: rgb(71, 113, 167);
+  padding: 1px;
+  padding-right: 40px;
+  max-height: 80vh; /* Defina uma altura máxima para o job-container */
+  overflow-y: auto;
+
+
+}
+
+.titulo{
+  text-align: center;
+  padding: 20px;
+  color: white;
+  
+}
+.task-item{
+  list-style-type: none;
+  border-radius: 10px;
+  background-color: rgb(234, 238, 237);
+  color: #000000;
+  padding: 10px;
+  min-width: 850px;
+  margin: 20px;
+  align-items: center;
+
+}
+
+.task-info{
+  padding: 20px;
+  list-style-type: none;
+}
+
+.action-buttons{
+  text-align: center;
+  padding: 1px;
+
+}
+.action-buttons button{
+  margin: 20px;
+  border-radius: 10px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none;
+  
+}
+.action-buttons button:hover{
+  background-color:  rgb(128, 131, 131);
+
+}
+.view-button{
+  background-color: rgb(0, 0, 0);
+  color: white;
+
+}
+.edit-button{
+  background-color: blue;
+  color: white;
+}
+
+.delete-button{
+  background-color: red;
+  color: white;
+}
+
+.create-button{
+
+  text-align: center;
+}
+.create-button button{
+
+  background-color: rgb(24, 150, 24);
+  color: white;
+  border-radius: 10px;
+  padding: 5px 60px;
+  transition: background-color 0.3s ease;
+  border: none;
+  
+
+}
+.create-button button:hover{
+  background-color:  rgb(128, 131, 131);
+}
+
+
+/* Estilo para o modal */
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilo para o fundo escurecido */
+.modal-backdrop.show {
+  opacity: 0.5;
+}
+
+
+/* No seu arquivo App.css */
+
+/* Estilo para o modal */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 50%; /* Coloca o topo do modal no centro vertical da tela */
+  left: 50%; /* Coloca a esquerda do modal no centro horizontal da tela */
+  transform: translate(-50%, -50%); /* Centraliza o modal corretamente */
+  width: 90%; /* Largura do modal em relação à largura da tela */
+  max-width: 600px; /* Largura máxima do modal */
+  background-color: rgba(0, 0, 0, 0.5); /* Fundo escurecido com 50% de opacidade */
+  z-index: 9999; /* Certifique-se de que o modal esteja acima do conteúdo existente */
+}
+
+/* Estilo para o conteúdo do modal */
+.modal-content {
+  background-color: #fff; /* Cor de fundo do modal */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Sombra suave para o modal */
+}
+
+/* Estilo para o título do modal */
+.modal-title {
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+/* Estilo para os botões no rodapé do modal */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+/* Estilo para o botão "Fechar" no modal */
+.modal-footer .btn-secondary {
+  background-color: #ccc;
+  color: #000;
+  border: none;
+  margin-left: 10px;
+}
+
+/* Estilo para o botão "Criar Tarefa" no modal */
+.modal-footer .btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+}
+
+/* Estilo para os campos de formulário dentro do modal */
+.modal-body input[type="text"],
+.modal-body select {
+  width: 92%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilo para os campos de data dentro do modal */
+.modal-body input[type="datetime-local"] {
+  width: 92%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#jobStatus  {
+  width: 96%; /* Defina a largura para 100% para que corresponda aos campos de entrada de texto */
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.error-message {
+  color: #f00; /* Cor vermelha para mensagens de erro */
+  font-size: 14px;
+  margin-top: 5px;
+  display: block; /* Garante que a mensagem de erro ocupe uma linha separada */
+}
+
+
+.cfg-button{
+  text-align: right;
+  vertical-align: top;
+  margin-top: 20px;
+}
+.cfg-button button:hover{
+  background-color:  rgb(0, 0, 0);
+}
+
+.config-button{
+  background-color: gray;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 12px 50px;
+  transition: background-color 0.3s ease;
+  
+  
+}
+
+.btn-cancel-send-email{
+  background-color: #000;
+
+  color:  white;
+ 
+
+
+}
