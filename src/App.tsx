@@ -115,12 +115,12 @@ function App() {
 
   const FormEditJob = async (taskId: number) => {
     // Encontre a tarefa com base no ID (taskId) e preencha o modal de edição com os detalhes dela
-    const task = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, {headers});
+    const task = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, { headers });
 
 
     const taskData = task.data;
 
-  
+
 
     setTaskId(taskId);
     setUpdateName(taskData.name);
@@ -249,7 +249,7 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/job',{ headers });
+        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/job', { headers });
         setJobs(res.data);
       } catch (error) {
         console.error("Erro ao buscar dados da API", error);
@@ -276,7 +276,7 @@ function App() {
         const jobId = response.data;
 
 
-        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/Job', {headers});
+        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/Job', { headers });
 
 
         setJobs(res.data);
@@ -315,7 +315,7 @@ function App() {
         closeUpdateModal();
 
 
-        
+
         const response = await axios.put(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, {
           id: taskId,
           name: updateName,
@@ -326,7 +326,7 @@ function App() {
 
 
         // Atualize a lista de tarefas após a atualização
-        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/Job', {headers});
+        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/Job', { headers });
         setJobs(res.data);
 
       } catch (error) {
@@ -381,9 +381,9 @@ function App() {
 
   }
 
-  const handleSendEmail= async () => {
+  const handleSendEmail = async () => {
 
-    const response = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`)
+    const response = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, {headers})
 
     const res = response.data;
 
@@ -393,9 +393,9 @@ function App() {
 
     //const response = await axios.get(`https://localhost:7295/api/SendEmail?jobId=${jobId}&timeSendEmail=${timeSendEmail}`);
     const sendEmail = await axios.post(`https://jaguar-darling-gratefully.ngrok-free.app/api/SendEmail?jobId=${res.id}&timeSendEmail=${delayMinutes}`,
-    {
-      subject: "Tarefa a ser executada",
-      body: `Olá, esta é uma notificação para informar que uma tarefa deverá executada em breve.\n\n
+      {
+        subject: "Tarefa a ser executada",
+        body: `Olá, esta é uma notificação para informar que uma tarefa deverá executada em breve.\n\n
       Detalhes da tarefa:\n
       - Nome: ${res.name}\n
       - Descrição: ${res.description}\n
@@ -404,7 +404,7 @@ function App() {
       Atenciosamente,\n
       TodoListApi
       `
-    });
+      });
 
     closeSendEmail();
 
@@ -432,7 +432,12 @@ function App() {
             <li key={index} className="task-item">
               <div className="task-info">
                 <strong>Nome:</strong> {job.name}<br />
-                <strong>Descrição:</strong> {job.description}<br />
+                <strong>Descrição:</strong> {job.description.split('\n').map((line, i) => (
+                  <span key={i}>
+                    {line}
+                    <br />
+                  </span>
+                ))}<br />
                 <strong>Data para Execução:</strong> {format(new Date(job.executionDate), 'dd/MM/yyyy HH:mm:ss')}<br />
                 <strong>Status:</strong> {statusMap[job.jobStatus] || `Status Desconhecido (${job.jobStatus})`}
               </div>
@@ -639,7 +644,7 @@ function App() {
                 value={delayMinutes}
                 onChange={(e) => setDelayMinutes(parseInt(e.target.value))}
               />
-              <Button  style={{ backgroundColor: 'green', color: 'white' }} onClick={handleSendEmail}
+              <Button style={{ backgroundColor: 'green', color: 'white' }} onClick={handleSendEmail}
               // Desabilita o botão se sendEmail for falso
               >
                 Enviar
@@ -649,7 +654,7 @@ function App() {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button  style={{ backgroundColor: 'black', color: 'white' }} onClick={closeSendEmail}>
+          <Button style={{ backgroundColor: 'black', color: 'white' }} onClick={closeSendEmail}>
             Cancelar
           </Button>
 
