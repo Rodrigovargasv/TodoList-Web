@@ -21,6 +21,7 @@ function App() {
 
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formEmailConfig, setformEmailConfig] = useState(false);
 
 
   //#region  propriedades
@@ -44,14 +45,18 @@ function App() {
   const [updateDescription, setUpdateDescription] = useState('');
   const [updateExecutionDate, setUpdateExecutionDate] = useState('');
   const [updateJobStatus, setUpdateJobStatus] = useState(1);
-  const [taskToDelete, setTaskToDelete] = useState(1)
-
+  const [taskToDelete, setTaskToDelete] = useState(1);
+  const [emailInUse, setEmailInUse] = useState("");
 
   const [formErrors, setFormErrors] = useState({
     name: '',
     description: '',
     createDate: '',
     executionDate: '',
+  });
+
+  const [configErro, setConfigErro] = useState({
+    email: ''
   });
   //#endregion
 
@@ -86,7 +91,10 @@ function App() {
     handleDelteJob();
   }
 
-  const openModalConfig = () => {
+  const openModalConfig = async () => {
+    const email = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Email/${1}`, { headers })
+    var emailInUse = email.data;
+    setEmailInUse(emailInUse.emailSend);
     setIsModalOpenConfig(true);
   }
   const closeModalConfig = () => {
@@ -357,25 +365,25 @@ function App() {
   };
 
   const handleConfigEmail = async () => {
-    console.log(updateEmail)
 
-    if (updateEmail == null) {
-      console.log("ok");
+    if (validateFormsUpdate() == true) {
+      setFormSubmitted(true);
+
     }
 
-    else {
-      try {
+    try {
+      const response = await axios.put(`https://jaguar-darling-gratefully.ngrok-free.app/api/Email/${1}`, {
+        id: 1,
+        emailSend: updateEmail,
 
-        const response = await axios.put(`https://jaguar-darling-gratefully.ngrok-free.app/api/Email/${1}`, {
-          id: 1,
-          emailSend: updateEmail,
-
-        });
-        closeModalConfig();
-      } catch (error) {
-        // Se ocorrer um erro na solicitação, você pode tratá-lo aqui
-        console.error('Erro ao atualizar tarefa:', error);
-      }
+      });
+      closeModalConfig();
+    } catch (error) {
+      
+      
+      alert('Email inválido');
+      // Se ocorrer um erro na solicitação, você pode tratá-lo aqui
+      console.error('Erro ao atualizar tarefa:', error);
     }
 
 
@@ -383,7 +391,7 @@ function App() {
 
   const handleSendEmail = async () => {
 
-    const response = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, {headers})
+    const response = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, { headers })
 
     const res = response.data;
 
@@ -602,13 +610,22 @@ function App() {
         </Modal.Header>
         <Modal.Body>
           <Form.Group controlId="email">
-            <Form.Label>Email para envio das notificações:</Form.Label>
+            <Form.Label>Email Para Envio das Notificações:</Form.Label>
             <Form.Control
               maxLength={100}
               type="text"
               name="Email"
               value={updateEmail}
               onChange={(e) => setUpdateEmail(e.target.value)}
+            />
+
+            <Form.Label>Email Em Uso:</Form.Label>
+            <Form.Control
+              type="text"
+              name="Email"
+              value={emailInUse}
+              readOnly={true}
+              disabled={true}
             />
           </Form.Group>
         </Modal.Body>
@@ -622,8 +639,7 @@ function App() {
 
         </Modal.Footer>
       </Modal>
-
-
+      {formEmailConfig && <span className="error-message">{configErro.email}</span>}
       <Modal show={isEmailModalOpen} onHide={closeSendEmail}>
         <Modal.Header >
           <Modal.Title>Enviar Email</Modal.Title>
@@ -661,9 +677,6 @@ function App() {
 
         </Modal.Footer>
       </Modal>
-
-
-
     </div>
 
   );

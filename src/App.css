@@ -220,6 +220,45 @@
 
   color:  white;
  
-
-
 }
+
+/* adptar para dispositivos moveis.*/
+@media (max-width: 767px) {
+  .container {
+    padding: 10px;
+  }
+
+  .cfg-button,
+  .create-button {
+    margin: 10px 0;
+  }
+
+  .titulo {
+    font-size: 18px; /* Reduz o tamanho da fonte para dispositivos menores */
+  }
+
+  .task-item {
+    padding: 10px;
+    min-width: auto; /* Remova o mínimo de largura para se adaptar ao conteúdo */
+    margin: 10px 0;
+  }
+
+  .task-info {
+    padding: 10px;
+    font-size: 14px; /* Reduz o tamanho da fonte para dispositivos menores */
+  }
+
+  .action-buttons {
+    margin-top: 10px;
+  }
+
+  .modal {
+    width: 90%;
+    max-width: 400px; /* Reduz a largura máxima do modal para dispositivos menores */
+  }
+
+  .modal-body input[type="text"],
+  .modal-body select,
+  .modal-body input[type="datetime-local"] {
+    width: 100%; /* Define a largura máxima para 100% para ocupar a largura total */
+  }}
