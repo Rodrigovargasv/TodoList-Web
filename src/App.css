@@ -260,5 +260,5 @@
   .modal-body input[type="text"],
   .modal-body select,
   .modal-body input[type="datetime-local"] {
-    width: 100%; /* Define a largura máxima para 100% para ocupar a largura total */
+    width: 90%; /* Define a largura máxima para 100% para ocupar a largura total */
   }}
