@@ -92,8 +92,9 @@ function App() {
   }
 
   const openModalConfig = async () => {
-    const email = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Email/${1}`, { headers })
+    const email = await axios.get(`https://todolistapii.azurewebsites.net/api/Email/${1}`)
     var emailInUse = email.data;
+    console.log(emailInUse);
     setEmailInUse(emailInUse.emailSend);
     setIsModalOpenConfig(true);
   }
@@ -106,8 +107,6 @@ function App() {
   const closeSendEmail = () => {
     setIsEmailModalOpen(false);
   }
-
-
 
   //#endregion
 
@@ -123,7 +122,7 @@ function App() {
 
   const FormEditJob = async (taskId: number) => {
     // Encontre a tarefa com base no ID (taskId) e preencha o modal de edição com os detalhes dela
-    const task = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, { headers });
+    const task = await axios.get(`https://todolistapii.azurewebsites.net/api/Job/${taskId}`);
 
 
     const taskData = task.data;
@@ -257,7 +256,8 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/job', { headers });
+        //const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/job', { headers });
+        const res = await axios.get<Job[]>('https://todolistapii.azurewebsites.net/api/job');
         setJobs(res.data);
       } catch (error) {
         console.error("Erro ao buscar dados da API", error);
@@ -279,12 +279,12 @@ function App() {
       try {
 
         // Faça a solicitação POST para a API com os dados do formData
-        const response = await axios.post('https://jaguar-darling-gratefully.ngrok-free.app/api/Job', formData);
+        const response = await axios.post('https://todolistapii.azurewebsites.net/api/Job', formData);
 
         const jobId = response.data;
 
 
-        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/Job', { headers });
+        const res = await axios.get<Job[]>('https://todolistapii.azurewebsites.net/api/Job');
 
 
         setJobs(res.data);
@@ -324,7 +324,7 @@ function App() {
 
 
 
-        const response = await axios.put(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, {
+        const response = await axios.put(`https://todolistapii.azurewebsites.net/api/Job/${taskId}`, {
           id: taskId,
           name: updateName,
           description: updateDescription,
@@ -334,7 +334,7 @@ function App() {
 
 
         // Atualize a lista de tarefas após a atualização
-        const res = await axios.get<Job[]>('https://jaguar-darling-gratefully.ngrok-free.app/api/Job', { headers });
+        const res = await axios.get<Job[]>('https://todolistapii.azurewebsites.net/api/Job');
         setJobs(res.data);
 
       } catch (error) {
@@ -349,7 +349,7 @@ function App() {
     if (taskToDelete !== null) {
       try {
 
-        await axios.delete(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskToDelete}`);
+        await axios.delete(`https://todolistapii.azurewebsites.net/api/Job/${taskToDelete}`);
 
 
         const updatedJobs = jobs.filter((job) => job.id !== taskToDelete);
@@ -372,7 +372,7 @@ function App() {
     }
 
     try {
-      const response = await axios.put(`https://jaguar-darling-gratefully.ngrok-free.app/api/Email/${1}`, {
+      const response = await axios.put(`https://todolistapii.azurewebsites.net/api/Email/${1}`, {
         id: 1,
         emailSend: updateEmail,
 
@@ -391,7 +391,7 @@ function App() {
 
   const handleSendEmail = async () => {
 
-    const response = await axios.get(`https://jaguar-darling-gratefully.ngrok-free.app/api/Job/${taskId}`, { headers })
+    const response = await axios.get(`https://todolistapii.azurewebsites.net/api/Job/${taskId}`)
 
     const res = response.data;
 
@@ -399,8 +399,9 @@ function App() {
 
     const formattedDate = format(executionDate, 'dd/MM/yyyy HH:mm:ss');
 
-    //const response = await axios.get(`https://localhost:7295/api/SendEmail?jobId=${jobId}&timeSendEmail=${timeSendEmail}`);
-    const sendEmail = await axios.post(`https://jaguar-darling-gratefully.ngrok-free.app/api/SendEmail?jobId=${res.id}&timeSendEmail=${delayMinutes}`,
+    console.log("chegou aqui" + executionDate);
+
+    const sendEmail = await axios.post(`https://todolistapii.azurewebsites.net/api/SendEmail?jobId=${res.id}&timeSendEmail=${delayMinutes}`,
       {
         subject: "Tarefa a ser executada",
         body: `Olá, esta é uma notificação para informar que uma tarefa deverá executada em breve.\n\n
